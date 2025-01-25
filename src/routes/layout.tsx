@@ -1,17 +1,46 @@
 import { component$, Slot } from "@builder.io/qwik";
-import type { RequestHandler } from "@builder.io/qwik-city";
+import { routeLoader$ } from "@builder.io/qwik-city";
+import CartContextProvider from "~/components/context/cart.context.provider";
 
-export const onGet: RequestHandler = async ({ cacheControl }) => {
-  // Control caching for this request for best performance and to reduce hosting costs:
-  // https://qwik.dev/docs/caching/
-  cacheControl({
-    // Always serve a cached response by default, up to a week stale
-    staleWhileRevalidate: 60 * 60 * 24 * 7,
-    // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
-    maxAge: 5,
+import IndexNavbar from "~/components/ui/navbars/index.navbar";
+import categoryController from "~/server/controllers/categoryController";
+import productController from "~/server/controllers/productController";
+import { getNumberOfPages } from "~/server/data/models/Product";
+
+
+
+export const useGetProducts = routeLoader$(async ({ url }) => {
+  return await productController.getProductsByCategory(url.searchParams.get("subcategory")!);
+  
+});
+
+export const useGetMainCategories = routeLoader$(async () => {
+  return categoryController.getRootCategories(); 
+});
+
+export const useGetSubCategories = routeLoader$(async ({ url }) => {
+  return categoryController.getSubCategories(url.searchParams.get("category")!);
+  
+});
+
+export const useGetResultPages = routeLoader$(async ({ url }) => {
+  return await getNumberOfPages({
+    categoryId: url.searchParams.get("subcategory")!,
+    take: parseInt(url.searchParams.get("take")!),
+    page: parseInt(url.searchParams.get("page")!),
   });
-};
+});
+
 
 export default component$(() => {
-  return <Slot />;
+  
+  return (
+    <CartContextProvider>
+    <IndexNavbar>
+      <Slot />
+     
+    </IndexNavbar>
+
+  </CartContextProvider>
+  );
 });
