@@ -32,11 +32,9 @@ export class Database {
 const productSuscription = server$(async () => {
     try {
       const subscription = await Database.getinstance().product.subscribe({
-       update:{
-        after:{
-          stock:{
-            gt:30
-          }
+       where:{
+        stock:{
+          gt:10
         }
        }
       });

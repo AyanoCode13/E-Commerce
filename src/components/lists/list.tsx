@@ -1,25 +1,27 @@
-import { component$ } from '@builder.io/qwik';
+import { $, component$, type QRL } from "@builder.io/qwik";
 
 export interface ListProps<T> {
   items: T[];
-  renderItem: (item: T, index: number) => any;
-  keyFn?: (item: T, index: number) => string | number;
-  className?: string;
+  renderItem: QRL<(item: T, index: number) => any>;
+  keyFn?: QRL<(item: T, index: number) => Promise<string | number>>;
+  cls?: string;
+  itemCls?: string;
 }
 
-export const List = component$(<T,>({
-  items, 
-  renderItem, 
-  keyFn = (item: T, index: number) => String(index),
-  className = ''
-}: ListProps<T>) => {
-  return (
-    <ul class={`list ${className}`}>
-      {items.map((item, index) => (
-        <li key={keyFn(item, index)}>
-          {renderItem(item, index)}
-        </li>
-      ))}
-    </ul>
-  );
-});
+export const List = component$(
+  <T,>({
+    items,
+    renderItem,
+    keyFn = $(async (item: T, index: number) => String(index)),
+    cls= "",
+    itemCls=""
+  }: ListProps<T>) => {
+    return (
+      <ul class={`${cls}`}>
+        {items.map(async (item, index) => (
+          <li key={await keyFn(item, index)} class={itemCls}>{renderItem(item, index)}</li>
+        ))}
+      </ul>
+    );
+  },
+);

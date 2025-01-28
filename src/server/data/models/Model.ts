@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { IModel } from "../interfaces/IModel";
+import { IModel } from "../../interfaces/IModel";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 import { PrismaClient } from "@prisma/client/scripts/default-index.js";
 

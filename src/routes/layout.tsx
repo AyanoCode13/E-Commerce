@@ -7,20 +7,18 @@ import categoryController from "~/server/controllers/categoryController";
 import productController from "~/server/controllers/productController";
 import { getNumberOfPages } from "~/server/data/models/Product";
 
-
-
 export const useGetProducts = routeLoader$(async ({ url }) => {
-  return await productController.getProductsByCategory(url.searchParams.get("subcategory")!);
-  
+  return await productController.getProductsByCategory(
+    url.searchParams.get("subcategory")!,
+  );
 });
 
 export const useGetMainCategories = routeLoader$(async () => {
-  return categoryController.getRootCategories(); 
+  return categoryController.getRootCategories();
 });
 
 export const useGetSubCategories = routeLoader$(async ({ url }) => {
-  return categoryController.getSubCategories(url.searchParams.get("category")!);
-  
+ return await categoryController.getSubCategories(url.searchParams.get("id")!);
 });
 
 export const useGetResultPages = routeLoader$(async ({ url }) => {
@@ -31,16 +29,12 @@ export const useGetResultPages = routeLoader$(async ({ url }) => {
   });
 });
 
-
 export default component$(() => {
-  
   return (
     <CartContextProvider>
-    <IndexNavbar>
-      <Slot />
-     
-    </IndexNavbar>
-
-  </CartContextProvider>
+      <IndexNavbar>
+        <Slot />
+      </IndexNavbar>
+    </CartContextProvider>
   );
 });

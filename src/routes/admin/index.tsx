@@ -4,7 +4,7 @@ import {
   zod$
 } from "@builder.io/qwik-city";
 import AddProductForm from "~/components/forms/add-product.form";
-import { addProductSchema } from "~/components/forms/schemas/product.schema";
+import { addProductSchema } from "~/components/forms/validators/product.schema";
 import { add } from "~/server/data/models/Product";
 
 

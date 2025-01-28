@@ -1,10 +1,9 @@
 import { type Prisma } from "@prisma/client";
-import { IModel } from "../interfaces/IModel";
-import { Database } from "../db";
+import { IModel } from "../../interfaces/IModel";
 
 
 
-class Category implements IModel {
+export default class Category implements IModel {
   constructor(private readonly db: Prisma.CategoryDelegate) {}
   async add(data: any): Promise<any> {
     return await this.db.create({data})
@@ -29,7 +28,7 @@ class Category implements IModel {
     throw new Error("Method not implemented.");
   }
   async getRootCategories() {
-    return await Database.getinstance().category.findMany({
+    return await this.db.findMany({
       where: {
         parents: {
           none: {},
@@ -44,20 +43,14 @@ class Category implements IModel {
     
   };
   async getSubCategories (categoryId: string) {
-    if (!categoryId) {
-      return [];
-    }
-    const res =  await Database.getinstance().category.findUnique({
-      where: {
-        id: categoryId,
-      },
-     select:{
+    //Set delay 1000
+   const res =await this.db.findUnique({
+    where: {id:categoryId},
+    select:{
       children:true
-     }
-    });
-    return res?.children || [];
-   
+    }
+   })
+    return res?.children;
   }
 }
 
-export default new Category(Database.getinstance().category)

@@ -1,6 +1,6 @@
 
 import { server$ } from "@builder.io/qwik-city";
-import IProductRepository from "../data/interfaces/IProductRepository";
+import IProductRepository from "../interfaces/IProductRepository";
 import Product from "../data/models/Product";
 import ProductRepository from "../data/repositories/productRepository";
 

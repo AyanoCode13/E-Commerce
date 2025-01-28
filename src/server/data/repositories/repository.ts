@@ -1,4 +1,4 @@
-import { IModel } from "../interfaces/IModel";
+import { IModel } from "../../interfaces/IModel";
 
 export default class Repository implements IModel {
     constructor(private readonly model: IModel) {}

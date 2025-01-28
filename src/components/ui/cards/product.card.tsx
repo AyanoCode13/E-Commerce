@@ -1,10 +1,9 @@
-import { $, component$, useContext, useSignal, useStore } from "@builder.io/qwik";
+import { $, component$, useContext, useSignal } from "@builder.io/qwik";
+import { useNavigate } from "@builder.io/qwik-city";
 import { BsHeartFill, BsPaletteFill } from "@qwikest/icons/bootstrap";
 import { CartContext } from "~/components/context/cart.context.provider";
 import { useRemoveFavoriteProduct, useSetFavoriteProduct } from "~/routes/category";
 import { useSession } from "~/routes/plugin@auth";
-import { remove } from './../../../server/data/models/Product';
-import { useLocation, useNavigate } from "@builder.io/qwik-city";
 
 type ProductCardProps = {
   id: string;
@@ -13,7 +12,7 @@ type ProductCardProps = {
   price: number;
   rating: number;
   sizes?: string[];
-  image?: {
+  images?: {
     url: string;
     alt: string;
   };
@@ -29,7 +28,7 @@ const AddToCartButton = component$((product: ProductCardProps) => {
       description: product.description ?? undefined,
       price: product.price,
       quantity: 1,
-      image: product.image?.url,
+   
     });
   });
 

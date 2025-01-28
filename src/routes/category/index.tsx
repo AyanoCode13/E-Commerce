@@ -6,8 +6,9 @@ import categoryController from "~/server/controllers/categoryController";
 import productController from "~/server/controllers/productController";
 import { getNumberOfPages } from "~/server/data/models/Product";
 import Filters from "./filters";
-import ProductList from "./product.list";
-import SubcategoryList from "./subcategory.list";
+
+import { ProductList } from "~/components/lists/product.list";
+import SubcategoryList from "~/components/lists/subcategory.list";
 
 export const useGetProducts = routeLoader$(async ({ url }) => {
   return await productController.getProductsByCategory(
@@ -175,7 +176,7 @@ export default component$(() => {
     <div class="flex flex-col">
       <SubcategoryList />
       <Filters />
-      <ProductList />
+      {/* <ProductList /> */}
      <MobileCart/>
     </div>
   );

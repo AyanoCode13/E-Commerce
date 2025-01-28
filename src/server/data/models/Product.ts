@@ -1,7 +1,7 @@
 import { server$ } from "@builder.io/qwik-city";
 import { type Prisma } from "@prisma/client";
 
-import { IModel } from "../interfaces/IModel";
+import { IModel } from "../../interfaces/IModel";
 import { Database } from "../db";
 
 
