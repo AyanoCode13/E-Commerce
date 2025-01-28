@@ -43,6 +43,9 @@ export default class Category implements IModel {
     
   };
   async getSubCategories (categoryId: string) {
+    if(!categoryId){
+      return []
+    }
     //Set delay 1000
    const res =await this.db.findUnique({
     where: {id:categoryId},
